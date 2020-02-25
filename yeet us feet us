@@ -1,0 +1,59 @@
+import discord
+from discord.ext import commands
+import asyncio
+
+bot = commands.Bot(command_prefix='v!')
+bot.remove_command('help')
+@bot.event
+async def on_ready():
+	game = discord.Game('v!help | In Beta Testing')
+	await bot.change_presence(status=discord.Status.online,activity=game)
+	print('The bot is ready!')
+	print(bot.user.name)
+	print(bot.user.id)
+	
+@bot.command(name='help')
+async def ping(ctx):
+	ctx.author.send('v!help')
+	await ctx.send(ctx.author.name+ ' Commands being added soon because this bot is in alpha no commands will be revealed unless @Vizual#0001 says so. Have a good day')	
+@bot.command(name='yeet')
+async def ping(ctx):
+	ctx.author.send('v!yeet')
+	await ctx.send(ctx.author.name+ ' you have been yeeted.')
+@bot.command(name='botinfo')
+async def ping(ctx):
+	ctx.author.send('v!botinfo')
+	await ctx.send('**Here is the bots invite code:  https://discordapp.com/api/oauth2/authorize?client_id=681558253141884978&permissions=8&scope=bot                                                                                                                                        Bot creation date: 23/2/2020     Bot Status: Alpha/Beta**')
+@bot.command(name='serverinfo')
+async def ping(ctx):
+	ctx.author.send('v!serverinfo')
+	await ctx.send('**Here is the server of Venox bot and his creator Vizual#0001 Server: https://discord.gg/9enVDE and if you need any help please join as we will announce everything there like updates, downtime and more**')
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def kick(ctx, member : discord.Member, *, reason=None):
+	await member.kick(reason=reason)
+	await ctx.send(f' Kicked {user.mention}')
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def ban(ctx, member : discord.Member, *, reason=None):
+	await member.ban(reason=reason)
+	await ctx.send(f' Banned {user.mention}')
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def unban(ctx, *, member):
+	banned_users = await ctx.guild.bans()
+	member_name, member_discriminator = member.split('#')
+	
+	for ban_entry in banned_users:
+		user = ban_entry.user
+	
+	if (user.name, user.discriminator) == (member_name, member_discriminator):
+		await ctx.guild.unban(user)
+	await ctx.send(f' Unbanned {user.mention}')
+	return	
+	
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount=5):
+	await ctx.channel.purge(limit=amount)
+bot.run('NjgxNTU4MjUzMTQxODg0OTc4.XlQY3A.yaHTC-5P-nqC6gIWyPUx6JZVRI0')
